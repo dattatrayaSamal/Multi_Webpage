@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- css -->
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Registration Form</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>Uploading Documents</header>
+
+      <form onsubmit="event.preventDefault()">
+        <div class="fileContainer">
+          <p class="fileText">
+            <span>Recent passport size photograph (image size 4MB)</span>
+          </p>
+          <input type="file" multiple id="photo" />
+        </div>
+
+        <div class="fileContainer">
+          <p class="fileText">
+            <span>HSC mark sheet (image, PDF or docs size 4MB)</span>
+          </p>
+          <input type="file" multiple id="hsc_marksheet" />
+        </div>
+
+        <div class="fileContainer">
+          <p class="fileText">
+            <span>SSC mark sheet (image, PDF or docs size 4MB)</span>
+          </p>
+          <input type="file" multiple id="ssc_marksheet" />
+        </div>
+
+        <div class="fileContainer">
+          <p class="fileText">
+            <span
+              >All semesters mark sheet in a single PDF or docs (file size less
+              than 10MB)</span
+            >
+          </p>
+          <input type="file" multiple id="all_marksheet" />
+        </div>
+
+        <div class="buttonContainer">
+          <!-- <button class="back" id="form3Back">Back</button> -->
+          <button class="submit" type="submit" id="form3Submit">Submit</button>
+        </div>
+      </form>
+    </div>
+    <script>
+      var photo = document.getElementById("photo");
+      var hsc_marksheet = document.getElementById("hsc_marksheet");
+      var ssc_marksheet = document.getElementById("ssc_marksheet");
+      var all_marksheet = document.getElementById("all_marksheet");
+
+      const form3Submit = document.getElementById("form3Submit");
+      form3Submit.addEventListener("click", () => {
+        if (formData3()) {
+          const response = confirm("Are you sure you want to submit the form?");
+          response ? (window.location.href = "welcome.html") : null;
+        } else alert("!!! Files can't be empty.");
+      });
+
+      const formData3 = () => {
+        if (
+          photo.value === "" ||
+          hsc_marksheet.value === "" ||
+          ssc_marksheet.value === "" ||
+          all_marksheet.value === ""
+        ) {
+          return false;
+        } else {
+          return true;
+        }
+      };
+
+      photo.addEventListener("change", () => {
+        const fr = new FileReader();
+        fr.readAsDataURL(photo.files[0]);
+        fr.addEventListener("load", () => {
+          const url = fr.result;
+          localStorage.setItem("Photo", url);
+        });
+      });
+
+      hsc_marksheet.addEventListener("change", () => {
+        const fr = new FileReader();
+        fr.readAsDataURL(hsc_marksheet.files[0]);
+        fr.addEventListener("load", () => {
+          const url = fr.result;
+          localStorage.setItem("HSC_Marksheet", url);
+        });
+      });
+
+      ssc_marksheet.addEventListener("change", () => {
+        const fr = new FileReader();
+        fr.readAsDataURL(ssc_marksheet.files[0]);
+        fr.addEventListener("load", () => {
+          const url = fr.result;
+          localStorage.setItem("SSC_Marksheet", url);
+        });
+      });
+
+      all_marksheet.addEventListener("change", () => {
+        const fr = new FileReader();
+        fr.readAsDataURL(all_marksheet.files[0]);
+        fr.addEventListener("load", () => {
+          const url = fr.result;
+          localStorage.setItem("All_Marksheet", url);
+        });
+      });
+    </script>
+  </body>
+</html>
